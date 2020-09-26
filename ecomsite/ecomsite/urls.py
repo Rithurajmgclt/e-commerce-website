@@ -18,6 +18,7 @@ from django.urls import path
 from shop import views as shopview
 
 urlpatterns = [
+    path('checkout/',shopview.checkout,name='checkout'),
     path('admin/', admin.site.urls),
     path('',shopview.index, name='index'),
     path('<int:id>',shopview.detail,name='detail')
