@@ -56,12 +56,8 @@
             <div class="card">
                 <img width="250px" height="186px" src={{product.image}} class="card-img-top" alt="">
                 <div class="card-body">
-                    <div id="nm{{product.id}}" class="card-title">
-                       {{product.title}}
-                    </div>
-                    <div class="card-text">
-                        ${{product.price}}
-                    </div>
+                    <div id="nm{{product.id}}" class="card-title">{{product.title}}</div>
+                    <div class="card-text" id="vl{{product.id}}" >{{product.price}}</div>
                     <a href ="/{{product.id}}" class=" btn btn-warning">view</a>
                     <button id="{{product.id}}"  class="btn btn-warning atc">Add to cart</button>
                 </div>
@@ -112,11 +108,16 @@
         console.log(item_id);
 
         if(cart[item_id]!=undefined){
-            cart[item_id]= cart[item_id]+1
+            quantity= cart[item_id][0]+1;
+            cart[item_id][0]=quantity;
+            cart[item_id][2]=cart[item_id][2]+parseFloat(document.getElementById("vl" + item_id).innerHTML);
 
         }
         else{
-            cart[item_id] = 1
+            quantity = 1
+            price=parseFloat(document.getElementById("vl" + item_id).innerHTML);
+            name = document.getElementById("nm" + item_id).innerHTML;
+            cart[item_id] = [quantity,name,price];
 
         }
         console.log(cart);
@@ -138,7 +139,7 @@ cartString += cartindex;
 cartindex +=1;
 }
 }
-cartString += "<a href='/checkout'>checkout</a>";
+cartString += "<a class='d-flex justify-content-between' href='/checkout'>checkout</a>";
 document.getElementById('cart').setAttribute('data-content',cartString)
 $('[data-toggle="popover"]').popover()
 }
